@@ -31,12 +31,16 @@ class DemandaController extends Controller
 
     public function index(Request $request)
     {
-        $response = $this->client->get(env('API_CLIENTE_URL'), [
+        $response = $this->client->get('', [
             'auth' => [env('API_CLIENTE_USER'), env('API_CLIENTE_PASSWORD')],
             'query' => [
                 'auth' => [env('API_CLIENTE_USER'), env('API_CLIENTE_PASSWORD')],
                 'TIPO' => $request->tipo,
                 'INFO' => $request->info,
+                'headers' => [
+                    'Accept' => 'application/json',
+                    'Content-Type' => 'application/json; charset=UTF-8'
+                ]
             ],
         ]);
 
@@ -50,12 +54,12 @@ class DemandaController extends Controller
             'json' => $request->all(),
             'headers' => [
                 'Accept' => 'application/json',
-                'Content-Type' => 'application/json'
+                'Content-Type' => 'application/json; charset=UTF-8'
             ]
         ]);
 
         return response($response->getBody(), $response->getStatusCode())
-            ->header('Content-Type', 'text/html');
+            ->header('Content-Type', 'text/html; charset=UTF-8');
     }
 
     public function update(DemandaRequest $request)
@@ -65,22 +69,22 @@ class DemandaController extends Controller
             'json' => $request->all(),
             'headers' => [
                 'Accept' => 'application/json',
-                'Content-Type' => 'application/json'
+                'Content-Type' => 'application/json; charset=UTF-8'
             ]
         ]);
 
         return response($response->getBody(), $response->getStatusCode())
-            ->header('Content-Type', 'text/html');
+            ->header('Content-Type', 'text/html; charset=UTF-8');
     }
 
     public function destroy(Request $request)
     {
-        $response = $this->client->delete(env('API_CLIENTE_URL'), [
+        $response = $this->client->delete('', [
             'auth' => [env('API_CLIENTE_USER'), env('API_CLIENTE_PASSWORD')],
             'json' => $request->all(),
         ]);
 
         return response($response->getBody(), $response->getStatusCode())
-            ->header('Content-Type', 'text/html');
+            ->header('Content-Type', 'text/html; charset=UTF-8');
     }
 }
