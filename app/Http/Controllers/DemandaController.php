@@ -16,9 +16,16 @@ class DemandaController extends Controller
         $this->baseUrl = env('API_CLIENTE_URL');
         $this->client = new Client([
             'base_uri' => $this->baseUrl,
-            'timeout' => 30,
+            'timeout' => 60,
+            'connect_timeout' => 30,
+            'read_timeout' => 30,
             'allow_redirects' => true,
-            'verify' => true,
+            'http_errors' => true,
+            'verify' => false,
+            'curl' => [
+                CURLOPT_SSL_VERIFYPEER => false,
+                CURLOPT_SSL_VERIFYHOST => false
+            ]
         ]);
     }
 
@@ -38,9 +45,13 @@ class DemandaController extends Controller
 
     public function store(DemandaRequest $request)
     {
-        $response = $this->client->post(env('API_CLIENTE_URL'), [
+        $response = $this->client->post('', [
             'auth' => [env('API_CLIENTE_USER'), env('API_CLIENTE_PASSWORD')],
             'json' => $request->all(),
+            'headers' => [
+                'Accept' => 'application/json',
+                'Content-Type' => 'application/json'
+            ]
         ]);
 
         return response($response->getBody(), $response->getStatusCode())
@@ -49,9 +60,13 @@ class DemandaController extends Controller
 
     public function update(DemandaRequest $request)
     {
-        $response = $this->client->put(env('API_CLIENTE_URL'), [
+        $response = $this->client->post('', [
             'auth' => [env('API_CLIENTE_USER'), env('API_CLIENTE_PASSWORD')],
             'json' => $request->all(),
+            'headers' => [
+                'Accept' => 'application/json',
+                'Content-Type' => 'application/json'
+            ]
         ]);
 
         return response($response->getBody(), $response->getStatusCode())
