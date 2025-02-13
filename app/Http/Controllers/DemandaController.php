@@ -60,7 +60,7 @@ class DemandaController extends Controller
 
     public function update(DemandaRequest $request)
     {
-        $response = $this->client->post('', [
+        $response = $this->client->put('', [
             'auth' => [env('API_CLIENTE_USER'), env('API_CLIENTE_PASSWORD')],
             'json' => $request->all(),
             'headers' => [
